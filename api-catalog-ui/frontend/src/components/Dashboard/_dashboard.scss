@@ -4,6 +4,9 @@
   .header, .header > * {
     align-items: center;
   }
+    #search .MuiFormControl-root {
+        display: contents;
+    }
   h1 {
     margin: var( --spaceMedium ) 0;
     padding-bottom: var( --spaceMedium );
@@ -22,7 +25,35 @@
     }
   }
 
-  #grid-container,
+    #search {
+        height: 50px;
+        width: 422px;
+        margin-left: auto;
+        margin-right: auto;
+        background: #FFFFFF;
+        border: 1px solid #C9C8C5;
+
+        display: flex;
+
+        .MuiInput-root {
+            width: 100%;
+        }
+        >div {
+            >div {
+                >input {
+                    margin-left: auto;
+                    position: static;
+                }
+                >div {
+                    #search-icon {
+                       margin-left: 156px;
+                    }
+                }
+            }
+        }
+    }
+
+    #grid-container ,
   .apis {
     height: 100%;
     display: flex;
@@ -34,10 +65,15 @@
     padding-top: var( --spaceSmaller);
   }
 
+    #search_no_results {
+        margin: auto;
+        color: #CC092F;
+    }
+
   #dash-buttons {
     display: flex;
     justify-content: flex-end;
-  
+
     > *:last-child {
       margin-left: var( --spaceSmall );
     }
@@ -50,10 +86,25 @@
 
     .MuiSvgIcon-root {
       color: var( --text20 );
-      position: absolute;
+      position: relative;
       left: var( --spaceSmaller );
+      margin-top: 0px;
+      margin-left: 156px;
     }
+
+      /* For Firefox */
+      @-moz-document url-prefix() {
+          .MuiSvgIcon-root {
+              margin-left: 130px;
+          }
+          #search #search-icon {
+              margin-left: 130px;
+          }
+      }
+
     .MuiInputBase-input {
+      margin-top: auto;
+      margin-left: 10px;
       padding: var( --spaceMedium ) var( --spaceSmall ) var( --spaceMedium ) var( --spaceLargest );
     }
     .MuiInput-underline {
@@ -62,4 +113,13 @@
       }
     }
   }//end filtering-container
+}
+
+#separator2 {
+    background-color: #CC092F;
+    margin-bottom: 10px;
+    margin-top: auto;
+    height: 2px;
+    width: 99%;
+    display: block;
 }

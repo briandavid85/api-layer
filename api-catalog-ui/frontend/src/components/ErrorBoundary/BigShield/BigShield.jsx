@@ -10,7 +10,6 @@
 import { Component } from 'react';
 import { Typography, Button } from '@material-ui/core';
 import ArrowBackIosNewIcon from '@material-ui/icons/ArrowBackIos';
-// import '../../Dashboard/Dashboard.css';
 import './BigShield.css';
 
 export default class BigShield extends Component {
@@ -61,7 +60,13 @@ export default class BigShield extends Component {
                         <br />
                         {!disableButton && (
                             <div>
-                                <Button primary onClick={this.handleGoToHome} size="medium" iconStart={iconBack}>
+                                <Button
+                                    id="go-back-button"
+                                    primary
+                                    onClick={this.handleGoToHome}
+                                    size="medium"
+                                    iconStart={iconBack}
+                                >
                                     Go to Dashboard
                                 </Button>
                             </div>

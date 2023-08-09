@@ -1,5 +1,7 @@
 body #bottom-info-div {
   display: flex;
+  width: 74%;
+  margin: auto;
   justify-content: space-between;
   padding: var( --spaceMedium ) 0px;
   text-align: center;
@@ -17,4 +19,16 @@ body #bottom-info-div {
       color: var( --text15 );
     }
   }
+    .links {
+        display: block;
+        padding: 5px;
+    }
+}
+h6#footer-message {
+    color: #53565A;
+    text-align: center;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18.7px;
 }

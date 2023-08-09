@@ -4,7 +4,7 @@
   --fontFamily00: "Roboto", "Helvetica", "Arial", sans-serif;
   --fontFamilyMono: "Source Code Pro", monospace;
   //bg colors
-  --surface00: radial-gradient(80.11% 93.49% at 6.75% 9.06%, rgba(209, 224, 246, 0.39) 0%, rgba(209, 224, 246, 0) 100%), radial-gradient(52.93% 49.13% at 91.84% 90.56%, rgba(209, 224, 246, 0.455) 0%, rgba(209, 224, 246, 0) 100%), #FFFFFF;
+  --surface00:  var(--light-primary-alternate-shade-ffffff, #FFF);
 
   --surface05: #fff;
   --surface10: rgba(255, 255, 255, 0.9);
@@ -29,7 +29,7 @@
   --warn10: #FCA130;
 
   --unknown10: #E9E8E5;
-  
+
   // shadows
   --surfaceEffect10: 0px 3px 5px 1px rgba(0, 0, 0, 0.2);
 
@@ -46,8 +46,8 @@
   --text20Disabled: rgba(0, 0, 0, 0.56);
   --text25: rgba(0, 0, 0, 0.75);
   --placeholder10: rgba(0, 0, 0, 0.46);
-  --link10: #1873E2;
-  --link10Hover: #0E468B;
+  --link10: #000;
+  --link10Hover: #CC092F;
   --link10Visited: #631AFF;
   --link20: #0040F0;
   --link20Hover: #0030B3;
@@ -63,7 +63,7 @@
   --control00Active: #0030B2;
   --control00Disabled: rgba(140, 143, 151, 0.9);
 
-  --controlText15: #1873E2;
+  --controlText15: #CC092F;
   --controlText15Hover: #0E478B;
   --controlText15Disabled: rgba(115, 127, 141, 0.95);
 

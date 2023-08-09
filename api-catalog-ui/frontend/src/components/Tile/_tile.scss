@@ -21,7 +21,6 @@ body {
   .MuiCardContent-root,
   .dashboard-grid-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 
     &, &:last-child {
@@ -29,16 +28,15 @@ body {
     }
     > * {
       margin-left: var( --spaceLarge );
-      flex: 1;
 
       &.tile-description,
       &.description-header {
-        flex: 3;
+        margin-left: 70px;
       }
       &#grid-tile-sso {
         width: 50px;
         flex: unset;
-        margin: 0px;
+        margin: 0px 0 0 30px;
       }
       &.tile-description,
       &:first-child {
@@ -51,11 +49,97 @@ body {
   }//end card content
 
   .dashboard-grid-header {
+    position: relative;
     padding: var( --spaceSmall ) var( --spaceLarger);
     font-size: var( --fontSmall );
+    margin-left: auto;
 
     > *:not(:last-child) {
       text-align: left;
     }
   }
+
+    #videos {
+        margin-right: 120px;
+        width: 30px;
+        height: 20px;
+    }
+    #tutorials {
+        margin-right: 90px;
+        height: 20px;
+    }
+
+    .MuiCardContent-root.tile {
+        display: flex;
+    }
+
+    @media only screen and (max-width: 1500px) {
+        #media-icons {
+            position: relative;
+            right: auto;
+            float: left;
+        }
+        #videos {
+            margin-right: 0;
+            height: 20px;
+        }
+        #tutorials {
+            margin-right: 0;
+            height: 20px;
+        }
+        #use-cases-counter {
+            margin-right: 0;
+        }
+    }
+
+    @media only screen and (max-width: 1500px) {
+        .dashboard-grid-header {
+            display: none;
+        }
+        #media-icons {
+            display: none;
+        }
+    }
+    .media-labels {
+        font-size: 14px;
+    }
+    #videos-counter {
+        color: #602C0A;
+        margin-right: 5px;
+    }
+    #use-cases-counter {
+        color: #D61A00;
+        margin-right: 120px;
+    }
+    #tutorials-counter {
+        color: #9B51E0;
+        margin-right: 5px;
+    }
 }
+
+/* CSS styles for the container holding all the tiles */
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+/* CSS styles for each individual tile */
+.grid-item {
+    flex: 0 0 calc(25% - 16px);
+    margin: 8px;
+    position: relative; /* Add relative positioning to the tile */
+}
+
+/* CSS styles for media-icons group within each tile */
+#media-icons {
+    margin-right: -102px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: absolute; /* Use absolute positioning for the icons container */
+    right: 0; /* Align the icons container to the right side of the tile */
+    top: 50%; /* Vertically center the icons container */
+    transform: translateY(-50%); /* Correct the vertical alignment */
+}
+

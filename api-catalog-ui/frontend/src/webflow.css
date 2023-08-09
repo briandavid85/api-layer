@@ -227,7 +227,7 @@ td, th {
 }
 
 html {
-    height: 100%
+    height: 100%;
 }
 
 body {
@@ -2994,3 +2994,10 @@ html.w-mod-js *[data-ix="doc-load-hidden"] {
         text-align: center;
     }
 }
+
+@media only screen and (max-width: 600px) {
+    .header {
+        width: max-content;
+    }
+}
+

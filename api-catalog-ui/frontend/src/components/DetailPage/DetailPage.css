@@ -2,7 +2,9 @@
     box-sizing: border-box;
 }
 
-.detail-page {
+.main-content2 detail-content {
+    display: flex;
+    height: 100vh;
     text-align: left;
     background-color: #EFEFEF;
 }
@@ -44,14 +46,12 @@
 }
 
 .detailed-description-container {
-    margin-top: 2rem;
     text-align: left;
     overflow: hidden;
-    width: 100%;
 }
 
 .api-description-container {
-    margin-left: 388px;
+    margin-left: 375px;
     padding: 2.2rem;
 }
 
@@ -87,7 +87,6 @@
 }
 
 #title {
-    padding: 2rem .3rem 1.3rem 0;
     color: #58606e;
     font-size: 28px;
     font-weight: 700;
@@ -99,6 +98,7 @@
     font-size: 16px;
     color: #58606e;
     line-height: 130%;
+    width: 90%;
 }
 
 #service-tab {
@@ -106,15 +106,6 @@
 }
 
 .no-tiles-container {
-    margin-top: 2rem;
-    margin-left: 2rem;
-    text-align: left;
-    overflow: hidden;
-    width: 100%;
-}
-
-.no-tiles-container {
-    margin-top: 2rem;
     margin-left: 2rem;
     text-align: left;
     overflow: hidden;
@@ -138,12 +129,13 @@ div.content-description-container > div > div:nth-child(2) > div {
 }
 
 .nav-bar {
-    min-height: 84vh;
+    max-width: 380px;
+    min-height: 40vh;
     flex-direction: column;
     align-items: center;
     min-width: 368px;
     box-shadow: 0 0 6px hsl(210 14% 90%);
-    padding: 10px 5px 10px 20px;
+    padding: 10px 5px 16px 20px;
     flex: 1 0 0;
     width: auto;
     height: auto;
@@ -154,22 +146,26 @@ div.content-description-container > div > div:nth-child(2) > div {
 }
 
 .paragraph-description-container {
-    /*change width via templating mechanism to create space for the right menu (width 80%) */
     width: auto;
-    /*width: 80%;*/
     margin-left: 56px;
-}
-
-/*disabled for Zowe Catalog*/
-#right-resources-menu {
-    display: none;
-    float: right;
-    /*display: flex;*/
-    /*padding-left: 25px;*/
-    flex-direction: column;
-    align-items: flex-start;
 }
 
 .content-description-container {
     margin-right: 92px;
+}
+
+@media only screen and (max-width: 600px) {
+    .api-description-container {
+        margin-left: 0;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .nav-bar {
+        width: 600px;
+    }
+}
+
+.MuiTabs-root.custom-tabs.MuiTabs-vertical {
+    margin-right: 12px;
 }

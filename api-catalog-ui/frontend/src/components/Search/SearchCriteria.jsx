@@ -12,7 +12,6 @@ import { debounce } from 'lodash';
 import { InputAdornment, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
-// import './search.css';
 
 export default class SearchCriteria extends Component {
     // eslint-disable-next-line react/sort-comp
@@ -56,7 +55,12 @@ export default class SearchCriteria extends Component {
                 className="search-bar"
                 data-testid="search-bar"
                 InputProps={{
-                    endAdornment: <InputAdornment id="search-input">{icon}</InputAdornment>,
+                    disableUnderline: true,
+                    endAdornment: (
+                        <InputAdornment position="end" id="search-input">
+                            {icon}
+                        </InputAdornment>
+                    ),
                 }}
                 placeholder={placeholder}
                 value={criteria}

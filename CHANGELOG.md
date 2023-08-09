@@ -2,6 +2,12 @@
 
 All notable changes to the Zowe API Mediation Layer package will be documented in this file.
 
+## `2.10.0 (2023-07-28)`
+
+* Feature: The API Catalog now allows pre-defined style customizations (#2965) ([b286cef](https://github.com/zowe/api-layer/commit/b286cef))
+
+* Bugfix:  Provide client with information about expired password (#2969) ([c4dc217](https://github.com/zowe/api-layer/commit/c4dc217)), closes [#2969](https://github.com/zowe/api-layer/issues/2969)
+
 ## `2.9.0 (2023-06-12)`
 
 * Feature: Personal access tokens are now accepted as Bearer authentication and in the apimlAuthenticationToken cookie (#2908) ([7c393a6](https://github.com/zowe/api-layer/commit/7c393a6)), closes [#2908](https://github.com/zowe/api-layer/issues/2908)

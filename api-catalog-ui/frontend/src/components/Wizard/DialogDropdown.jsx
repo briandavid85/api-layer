@@ -11,7 +11,7 @@
 import { Component } from 'react';
 import { Button, Menu, MenuItem } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import './wizard.css';
+import { isAPIPortal } from '../../utils/utilFunctions';
 
 export default class DialogDropdown extends Component {
     constructor(props) {
@@ -53,7 +53,7 @@ export default class DialogDropdown extends Component {
     }
 
     renderDropdown() {
-        if (!this.props.visible || !Array.isArray(this.state.data)) {
+        if (!this.props.visible || !Array.isArray(this.state.data) || isAPIPortal()) {
             return null;
         }
         return (

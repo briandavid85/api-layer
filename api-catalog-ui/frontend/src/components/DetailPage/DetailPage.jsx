@@ -8,12 +8,9 @@
  * Copyright Contributors to the Zowe Project.
  */
 import { Component, Suspense } from 'react';
-import { Container, IconButton, Link, Typography } from '@material-ui/core';
+import { Container, Divider, IconButton, Link, Typography } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { Redirect, Route, Router, Switch } from 'react-router-dom';
-
-// import './DetailPage.css';
-// import './ReactRouterTabs.css';
 import Spinner from '../Spinner/Spinner';
 import formatError from '../Error/ErrorFormatter';
 import ServiceTabContainer from '../ServiceTab/ServiceTabContainer';
@@ -21,14 +18,20 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import BigShield from '../ErrorBoundary/BigShield/BigShield';
 import ServicesNavigationBarContainer from '../ServicesNavigationBar/ServicesNavigationBarContainer';
 import Shield from '../ErrorBoundary/Shield/Shield';
+import countAdditionalContents, { customUIStyle, isAPIPortal } from '../../utils/utilFunctions';
 
 export default class DetailPage extends Component {
     componentDidMount() {
-        const { fetchTilesStart, currentTileId, fetchNewTiles } = this.props;
+        const { fetchTilesStart, currentTileId, fetchNewTiles, history } = this.props;
         fetchNewTiles();
         if (currentTileId) {
             fetchTilesStart(currentTileId);
         }
+        if (!localStorage.getItem('serviceId')) {
+            const id = history.location.pathname.split('/service/')[1];
+            localStorage.setItem('serviceId', id);
+        }
+        localStorage.removeItem('selectedTab');
     }
 
     componentWillUnmount() {
@@ -42,9 +45,16 @@ export default class DetailPage extends Component {
         history.push('/dashboard');
     };
 
+    handleLinkClick = (e, id) => {
+        e.preventDefault();
+        const elementToView = document.querySelector(id);
+        if (elementToView) {
+            elementToView.scrollIntoView();
+        }
+    };
+
     render() {
         const {
-            tiles,
             isLoading,
             clearService,
             fetchTilesStop,
@@ -57,6 +67,7 @@ export default class DetailPage extends Component {
             currentTileId,
             fetchNewTiles,
         } = this.props;
+        let { tiles } = this.props;
         const iconBack = <ChevronLeftIcon />;
         let error = null;
         if (fetchTilesError !== undefined && fetchTilesError !== null) {
@@ -67,9 +78,25 @@ export default class DetailPage extends Component {
             fetchTilesStop();
             fetchNewTiles();
             fetchTilesStart(currentTileId);
+        } else if (services && services.length > 0 && !currentTileId) {
+            const id = history.location.pathname.split('/service/')[1];
+            if (id) {
+                const correctTile = services.find((tile) => tile.services.some((service) => service.serviceId === id));
+                if (correctTile) {
+                    tiles = [correctTile];
+                }
+            }
+        }
+        const apiPortalEnabled = isAPIPortal();
+        const hasTiles = !fetchTilesError && tiles && tiles.length > 0;
+        const { useCasesCounter, tutorialsCounter, videosCounter } = countAdditionalContents(services);
+        const onlySwaggerPresent = tutorialsCounter === 0 && videosCounter === 0 && useCasesCounter === 0;
+        if (hasTiles && 'customStyleConfig' in tiles[0] && tiles[0].customStyleConfig) {
+            customUIStyle(tiles[0].customStyleConfig);
         }
         return (
-            <div className="main-content detail-content">
+            <div className="main-content2 detail-content">
+                {apiPortalEnabled && <Divider light id="footer-divider" />}
                 <Spinner isLoading={isLoading} />
                 {fetchTilesError && (
                     <div className="no-tiles-container">
@@ -97,16 +124,18 @@ export default class DetailPage extends Component {
                 </div>
                 {!isLoading && !fetchTilesError && (
                     <div className="api-description-container">
-                        <IconButton
-                            id="go-back-button"
-                            data-testid="go-back-button"
-                            color="primary"
-                            onClick={this.handleGoBack}
-                            size="medium"
-                        >
-                            {iconBack}
-                            Back
-                        </IconButton>
+                        {!apiPortalEnabled && (
+                            <IconButton
+                                id="go-back-button"
+                                data-testid="go-back-button"
+                                color="primary"
+                                onClick={this.handleGoBack}
+                                size="medium"
+                            >
+                                {iconBack}
+                                Back
+                            </IconButton>
+                        )}
                         <div className="detailed-description-container">
                             <div className="title-api-container">
                                 {tiles !== undefined && tiles.length === 1 && (
@@ -123,15 +152,33 @@ export default class DetailPage extends Component {
                                 )}
                             </div>
                         </div>
-                        <div id="right-resources-menu">
-                            <Typography variant="subtitle1">On this page</Typography>
-                            <Container>
-                                <Link className="links">Swagger</Link>
-                                <Link className="links">Use cases</Link>
-                                <Link className="links">Tutorials</Link>
-                                <Link className="links">Videos</Link>
-                            </Container>
-                        </div>
+                        {apiPortalEnabled && !onlySwaggerPresent && (
+                            <div id="right-resources-menu">
+                                <Typography id="resources-menu-title" variant="subtitle1">
+                                    On this page
+                                </Typography>
+                                <Container>
+                                    <Link className="links" onClick={(e) => this.handleLinkClick(e, '#swagger-label')}>
+                                        Swagger
+                                    </Link>
+                                    <Link
+                                        className="links"
+                                        onClick={(e) => this.handleLinkClick(e, '#use-cases-label')}
+                                    >
+                                        Use cases ({useCasesCounter})
+                                    </Link>
+                                    <Link
+                                        className="links"
+                                        onClick={(e) => this.handleLinkClick(e, '#tutorials-label')}
+                                    >
+                                        Tutorials ({tutorialsCounter})
+                                    </Link>
+                                    <Link className="links" onClick={(e) => this.handleLinkClick(e, '#videos-label')}>
+                                        Videos ({videosCounter})
+                                    </Link>
+                                </Container>
+                            </div>
+                        )}
                     </div>
                 )}
                 <div className="content-description-container">
@@ -151,7 +198,12 @@ export default class DetailPage extends Component {
                                         path={`${match.path}/:serviceId`}
                                         render={() => (
                                             <div className="tabs-swagger">
-                                                <ServiceTabContainer tiles={tiles} />
+                                                <ServiceTabContainer
+                                                    videosCounter={videosCounter}
+                                                    tutorialsCounter={tutorialsCounter}
+                                                    useCasesCounter={useCasesCounter}
+                                                    tiles={tiles}
+                                                />
                                             </div>
                                         )}
                                     />
@@ -166,6 +218,7 @@ export default class DetailPage extends Component {
                             </Router>
                         </Suspense>
                     )}
+                    {apiPortalEnabled && <Divider light id="footer-divider" />}
                 </div>
             </div>
         );
